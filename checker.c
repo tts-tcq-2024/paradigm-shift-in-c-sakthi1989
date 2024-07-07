@@ -1,18 +1,17 @@
 #include <stdio.h>
 #include <assert.h>
  
-int isBatteryManagementSystemMeasuresWithinRange(float value, float min, float max, const char* message) {
-  if (value < min || value > max) {
-    printf("%s\n", message);
-    return 0;
-  }
-  return 1;
+int Check(float Value, float MinValue, float MaxValue, char *ErrMsg)
+{
+    char Ret = 0;
+    if(!(Ret = ((Value >= MinValue) && (Value <= MaxValue)) ? 1: 0))
+        printf("%s\n", ErrMsg);
+    
+    return Ret;
 }
- 
+
 int batteryIsOk(float temperature, float soc, float chargeRate) {
-  return isBatteryManagementSystemMeasuresWithinRange(temperature, 0, 45, "Temperature out of range!")&&
-    isBatteryManagementSystemMeasuresWithinRange(soc, 20, 80, "State of Charge out of range!")&&
-    isBatteryManagementSystemMeasuresWithinRange(chargeRate, 0, 0.8, "Charge Rate out of range!");
+  return Check(temperature, 0, 45, "Temperature out of range!\n") + Check(soc, 20, 80, "State of Charge out of range!\n") + Check(chargeRate, 0, 0.8, "Charge Rate out of range!\n") ? 1 : 0;
 }
  
 int main() {
