@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 void PrintMsg(const char* PrintMsgInEng, const char* PrintMsgInGer) {
     if (LanguageSel == 0) {
         printf("%s\n", PrintMsgInEng);
