@@ -11,8 +11,6 @@ typedef struct {
     const char* WarUprPrintMsgInGer;
 } BatteryParamLimits;
 
-int LanguageSel = 0;
-
 void PrintMsg(const char* PrintMsgInEng, const char* PrintMsgInGer);
 int BatteryLmtCheck(float value, float LwrLmt, float UprLmt, const char* PrintMsgInEng, const char* PrintMsgInGer);
 int ParameterCheck(float value, BatteryParamLimits Limits);
