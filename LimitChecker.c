@@ -1,3 +1,5 @@
+#include "LimitChecker.h"
+
 int BatteryLmtCheck(float value, float LwrLmt, float UprLmt, const char* PrintMsgInEng, const char* PrintMsgInGer)
 {
 	/*Limit check*/
