@@ -19,7 +19,12 @@ int batteryIsOk(float temperature, float soc, float chargeRate) {
 	"Warning: Charge Rate is decreasing", "Warnung: Die Laderate sinkt", \
 	"Warning: Charge Rate is increasing", "Warnung: Die Laderate steigt"};
 
-   return ParameterCheck(temperature, TemperatureLimits) + ParameterCheck(soc, SocLimits) + ParameterCheck(chargeRate, ChargeRateLimits) ? 1 : 0;
+   int status = 1;
+    status &= ParameterCheck(temperature, TemperatureLimits);
+    status &= ParameterCheck(soc, SocLimits);
+    status &= ParameterCheck(chargeRate, ChargeRateLimits);
+
+    return status;
 }
 
 int main()
