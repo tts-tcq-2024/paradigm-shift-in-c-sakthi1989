@@ -1,6 +1,8 @@
 #include "Common.h"
 #include <assert.h>
 
+int LanguageSel = 0;
+
 int batteryIsOk(float temperature, float soc, float chargeRate) {
     BatteryParamLimits TemperatureLimits = {0, 45, 40, 45, \
 	"Temperature out of range!", "Temperatur außerhalb des Bereichs!", \
