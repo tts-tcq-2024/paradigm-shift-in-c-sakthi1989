@@ -4,5 +4,9 @@
 extern int LanguageSel;
 
 void PrintMsg(const char* PrintMsgInEng, const char* PrintMsgInGer) {
-    (LanguageSel == 0)  ?  printf("%s\n", PrintMsgInEng) : printf("%s\n", PrintMsgInGer);
+    if (LanguageSel == 0) {
+        printf("%s\n", PrintMsgInEng);
+    } else {
+        printf("%s\n", PrintMsgInGer);
+    }
 }
