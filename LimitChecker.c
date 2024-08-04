@@ -8,7 +8,7 @@ int LowerLimitChecker(float value, float lowerLimit,  const char* lowerMsgEng, c
     }
 }
 
-int UpperLimitChecker(float value, float upperLimit, const char* upperMsgEng, const char* upperMsgGe)
+int UpperLimitChecker(float value, float upperLimit, const char* upperMsgEng, const char* upperMsgGer)
 {
     if (value > upperLimit) {
         PrintMsg(upperMsgEng, upperMsgGer);
