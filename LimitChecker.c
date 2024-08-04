@@ -1,6 +1,24 @@
 #include "Common.h"
 
+int LowerLimitChecker(float value, float lowerLimit,  const char* lowerMsgEng, const char* lowerMsgGer)
+{
+    if (value < lowerLimit) {
+        PrintMsg(lowerMsgEng, lowerMsgGer);
+        return 0;
+    }
+}
+
+int UpperLimitChecker(float value, float upperLimit, const char* upperMsgEng, const char* upperMsgGe)
+{
+    if (value > upperLimit) {
+        PrintMsg(upperMsgEng, upperMsgGer);
+        return 0;
+    }
+}
+
 int CheckAndPrint(float value, float lowerLimit, float upperLimit, const char* lowerMsgEng, const char* lowerMsgGer, const char* upperMsgEng, const char* upperMsgGer) {
+
+    #if 0
     if (value < lowerLimit) {
         PrintMsg(lowerMsgEng, lowerMsgGer);
         return 0;
@@ -9,6 +27,9 @@ int CheckAndPrint(float value, float lowerLimit, float upperLimit, const char* l
         return 0;
     }
     return 1;
+    #endif
+
+    return LowerLimitChecker(value, lowerLimit, lowerMsgEng, lowerMsgGer) + UpperLimitChecker(value, upperLimit, upperMsgEng, upperMsgGer) ? 0 : 1; 
 }
 
 int ParameterCheck(float value, BatteryParamLimits Limits) {
