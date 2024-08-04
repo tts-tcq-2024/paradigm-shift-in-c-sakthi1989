@@ -41,5 +41,6 @@ int main()
     //assert(batteryIsOk(30, 22, 0.5));
     //assert(batteryIsOk(30, 78, 0.5));
 
-    return 0;
+    
+	return 0;
 }
