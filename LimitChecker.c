@@ -17,7 +17,6 @@ int UpperLimitChecker(float value, float upperLimit, const char* upperMsgEng, co
 }
 
 int CheckAndPrint(float value, float lowerLimit, float upperLimit, const char* lowerMsgEng, const char* lowerMsgGer, const char* upperMsgEng, const char* upperMsgGer) {
-
     #if 0
     if (value < lowerLimit) {
         PrintMsg(lowerMsgEng, lowerMsgGer);
