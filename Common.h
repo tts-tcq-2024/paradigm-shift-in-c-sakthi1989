@@ -1,17 +1,23 @@
-typedef struct {
-    float LwrLmt;
-    float UprLmt;
-    float WarLwrLmt;
-    float WarUprLmt;
-    const char* OutOfRngPrintMsgInEng;
-    const char* OutOfRngPrintMsgInGer;
-    const char* WarLwrPrintMsgInEng;
-    const char* WarLwrPrintMsgInGer;
-    const char* WarUprPrintMsgInEng;
-    const char* WarUprPrintMsgInGer;
-} BatteryParamLimits;
+#ifndef CHECK_H
+#define CHECK_H
 
-void PrintMsg(const char* PrintMsgInEng, const char* PrintMsgInGer);
-int BatteryLmtCheck(float value, float LwrLmt, float UprLmt, const char* PrintMsgInEng, const char* PrintMsgInGer);
-int ParameterCheck(float value, BatteryParamLimits Limits);
-int batteryIsOk(float temperature, float soc, float chargeRate);
+typedef int (*CheckFunc)(float);
+
+typedef struct {
+    CheckFunc check;
+    float value;
+    float tolerance;
+    const char *message;
+    const char *warningLowMessage;
+    const char *warningHighMessage;
+} Check;
+
+void printMessage(const char *message);
+int isTemperatureInRange(float temperature);
+int isSocInRange(float soc);
+int isChargeRateInRange(float chargeRate);
+int performCheck(const Check* check, float minLimit, float maxLimit);
+void checkLowWarning(const Check* check, float minLimit);
+void checkHighWarning(const Check* check, float maxLimit);
+
+#endif // CHECK_H
