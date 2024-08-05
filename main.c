@@ -18,6 +18,7 @@ int batteryIsOk(float temperature, float soc, float chargeRate) {
             return 0;
         }
     }
+	
     return 1;
 }
 
