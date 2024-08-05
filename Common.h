@@ -3,7 +3,6 @@
 
 typedef int (*CheckFunc)(float);
 
-
 typedef struct {
     CheckFunc check;
     float value;
