@@ -1,42 +1,39 @@
 #include "Common.h"
 
-int LowerLimitChecker(float value, float lowerLimit,  const char* lowerMsgEng, const char* lowerMsgGer)
-{
-    if (value < lowerLimit) {
-        PrintMsg(lowerMsgEng, lowerMsgGer);
-        return 0;
+oid printMessage(const char *message) {
+    printf("%s", message);
+}
+
+int isTemperatureInRange(float temperature) {
+    return (temperature >= 0 && temperature <= 45);
+}
+
+int isSocInRange(float soc) {
+    return (soc >= 20 && soc <= 80);
+}
+
+int isChargeRateInRange(float chargeRate) {
+    return (chargeRate <= 0.8);
+}
+
+void checkLowWarning(const Check* check, float minLimit) {
+    if (check->warningLowMessage && check->value <= minLimit + check->tolerance) {
+        printMessage(check->warningLowMessage);
     }
 }
 
-int UpperLimitChecker(float value, float upperLimit, const char* upperMsgEng, const char* upperMsgGer)
-{
-    if (value > upperLimit) {
-        PrintMsg(upperMsgEng, upperMsgGer);
-        return 0;
+void checkHighWarning(const Check* check, float maxLimit) {
+    if (check->warningHighMessage && check->value >= maxLimit - check->tolerance) {
+        printMessage(check->warningHighMessage);
     }
 }
 
-int CheckAndPrint(float value, float lowerLimit, float upperLimit, const char* lowerMsgEng, const char* lowerMsgGer, const char* upperMsgEng, const char* upperMsgGer) {
-    #if 0
-    if (value < lowerLimit) {
-        PrintMsg(lowerMsgEng, lowerMsgGer);
-        return 0;
-    } else if (value > upperLimit) {
-        PrintMsg(upperMsgEng, upperMsgGer);
+int performCheck(const Check* check, float minLimit, float maxLimit) {
+    if (!check->check(check->value)) {
+        printMessage(check->message);
         return 0;
     }
-    return 1;
-    #endif
-
-    return LowerLimitChecker(value, lowerLimit, lowerMsgEng, lowerMsgGer) + UpperLimitChecker(value, upperLimit, upperMsgEng, upperMsgGer) ? 0 : 1; 
-}
-
-int ParameterCheck(float value, BatteryParamLimits Limits) {
-    if (!CheckAndPrint(value, Limits.WarLwrLmt, Limits.LwrLmt, Limits.WarLwrPrintMsgInEng, Limits.WarLwrPrintMsgInGer, Limits.OutOfRngPrintMsgInEng, Limits.OutOfRngPrintMsgInGer)) {
-        return 0;
-    }
-    if (!CheckAndPrint(value, Limits.UprLmt, Limits.WarUprLmt, Limits.OutOfRngPrintMsgInEng, Limits.OutOfRngPrintMsgInGer, Limits.WarUprPrintMsgInEng, Limits.WarUprPrintMsgInGer)) {
-        return 0;
-    }
+    checkLowWarning(check, minLimit);
+    checkHighWarning(check, maxLimit);
     return 1;
 }
