@@ -1,6 +1,7 @@
 #include "Common.h"
+#include <stdio.h>
 
-oid printMessage(const char *message) {
+void printMessage(const char *message) {
     printf("%s", message);
 }
 
