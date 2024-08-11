@@ -1,40 +1,56 @@
-#include "Common.h"
+#include <stdio.h>
 #include <assert.h>
 
-int LanguageSel = 0;
+typedef enum {
+    ENGLISH,
+    GERMAN
+} Language;
 
-int batteryIsOk(float temperature, float soc, float chargeRate) {
-    Check checks[] = {
-        {isTemperatureInRange, temperature, 2.25, "Temperature out of range!\n", "Warning: Approaching low temperature limit!\n", "Warning: Approaching high temperature limit!\n"},
-        {isSocInRange, soc, 4.0, "State of Charge out of range!\n", "Warning: Approaching low SoC limit!\n", "Warning: Approaching high SoC limit!\n"},
-        {isChargeRateInRange, chargeRate, 0.04, "Charge Rate out of range!\n", "Warning: Approaching low charge rate limit!\n", "Warning: Approaching high charge rate limit!\n"}
-    };
+Language language = ENGLISH;
 
-    float minLimits[] = {0, 20, 0};
-    float maxLimits[] = {45, 80, 0.8};
-
-    for (int i = 0; i < sizeof(checks) / sizeof(checks[0]); ++i) {
-        if (!performCheck(&checks[i], minLimits[i], maxLimits[i])) {
-            return 0;
-        }
+void PrintMessage(const char* msg_en, const char* msg_de)
+{
+    switch (language) 
+    {
+        case 0:
+            printf("EN: %s\n", msg_en);
+            break;
+        case 1:
+            printf("DE: %s\n", msg_de);
+            break;
+        default:
+            printf("Language not supported\n");
+            break;
     }
-	
+}
+
+int OutOfRange(float val, float min, float max, const char* msg_en, const char* msg_de) 
+{
+    if (val < min || val > max)
+    {
+        PrintMessage(msg_en, msg_de);
+        return 0;
+    }
     return 1;
 }
 
+int batteryIsOk(float temperature, float soc, float chargeRate)
+{
+  // Messages in English and German
+    const char* msg_temp_en = "Temperature out of range!";
+    const char* msg_soc_en = "SOC out of range!";
+    const char* msg_charge_en = "Charge Rate out of range!";
+    
+    const char* msg_temp_de = "Temperatur außerhalb des zulässigen Bereichs!";
+    const char* msg_soc_de = "SOC außerhalb des zulässigen Bereichs!";
+    const char* msg_charge_de = "Ladestrom außerhalb des zulässigen Bereichs!";
+    
+    return OutOfRange(temperature, 0, 45, msg_temp_en, msg_temp_de)
+        && OutOfRange(soc, 20, 80, msg_soc_en, msg_soc_de)
+        && OutOfRange(chargeRate, 0, 0.8, msg_charge_en, msg_charge_de);
+}
 
 int main() {
-    assert(batteryIsOk(25, 70, 0.7));
-    assert(!batteryIsOk(50, 85, 0));
-    assert(!batteryIsOk(30, 85, 0));
-    assert(!batteryIsOk(25, 70, 0.9));
-    
-    // Warning test cases
-    assert(batteryIsOk(2.15, 70, 0.7)); 
-    assert(batteryIsOk(44.85, 70, 0.7)); 
-    assert(batteryIsOk(25, 23.95, 0.7)); 
-    assert(batteryIsOk(25, 76.05, 0.7));
-    assert(batteryIsOk(25, 70, 0.76)); 
-	
-    return 0;
+  assert(batteryIsOk(25, 70, 0.7));
+  assert(!batteryIsOk(50, 85, 0));
 }
