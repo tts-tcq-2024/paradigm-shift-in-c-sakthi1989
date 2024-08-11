@@ -1,38 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
-
-typedef enum {
-    ENGLISH,
-    GERMAN
-} Language;
-
-Language language = ENGLISH;
-
-void PrintMessage(const char* msg_en, const char* msg_de)
-{
-    switch (language) 
-    {
-        case 0:
-            printf("EN: %s\n", msg_en);
-            break;
-        case 1:
-            printf("DE: %s\n", msg_de);
-            break;
-        default:
-            printf("Language not supported\n");
-            break;
-    }
-}
-
-int OutOfRange(float val, float min, float max, const char* msg_en, const char* msg_de) 
-{
-    if (val < min || val > max)
-    {
-        PrintMessage(msg_en, msg_de);
-        return 0;
-    }
-    return 1;
-}
+#include "Common.h"
 
 int batteryIsOk(float temperature, float soc, float chargeRate)
 {
