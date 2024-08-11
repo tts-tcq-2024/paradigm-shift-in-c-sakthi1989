@@ -2,6 +2,8 @@
 #include <assert.h>
 #include "Common.h"
 
+Language language;
+
 int batteryIsOk(float temperature, float soc, float chargeRate)
 {
   // Messages in English and German
