@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "Common.h"
 
-Language language;
+Language language = ENGLISH;
 
 int batteryIsOk(float temperature, float soc, float chargeRate)
 {
