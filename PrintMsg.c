@@ -1,4 +1,6 @@
 #include "Common.h"
+#include <stdio.h>
+extern Language language;
 void PrintMessage(const char* msg_en, const char* msg_de)
 {
     switch (language) 
